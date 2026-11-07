@@ -2,749 +2,722 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>岳奥飞 · 个人简历</title>
     <style>
-        /* ===== CSS Variables & Reset ===== */
+        /* ═══════════════════════════════════════════════════════════════
+           基础
+           ═══════════════════════════════════════════════════════════════ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            --color-primary: #2563eb;
-            --color-primary-light: #3b82f6;
-            --color-primary-dark: #1d4ed8;
-            --color-secondary: #7c3aed;
-            --color-accent: #06b6d4;
-            --color-bg-start: #d4e9ff;
-            --color-bg-end: #e6f3ff;
-            --color-bg-card: rgba(255, 255, 255, 0.72);
-            --color-text: #0f172a;
-            --color-text-secondary: #1e293b;
-            --color-text-muted: #334155;
-            --color-border: rgba(148, 163, 184, 0.35);
-            --shadow-sm: 0 2px 12px rgba(0, 50, 100, 0.06);
-            --shadow-md: 0 8px 30px rgba(0, 50, 100, 0.10);
-            --shadow-lg: 0 16px 48px rgba(0, 50, 100, 0.14);
-            --radius: 12px;
-            --radius-sm: 6px;
-            --transition: 0.25s ease;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
-            --max-width: 1100px;
-            --nav-height: 64px;
+            --ink: #0a0a0c;
+            --ink2: #12131a;
+            --paper: #e8e0d0;
+            --seal: #a3372c;
+            --seal-l: #c94f3d;
+            --gold: #c9a86a;
+            --gold-d: #8a7040;
+            --txt: #ddd5c4;
+            --txt-dim: rgba(221, 213, 196, .62);
+            --txt-faint: rgba(221, 213, 196, .34);
+            --line: rgba(201, 168, 106, .14);
+            --glass: rgba(14, 15, 20, .66);
+            --ease: cubic-bezier(.22, 1, .30, 1);
+            --serif: "Songti SC", "STSong", "Source Han Serif SC", "Noto Serif SC", serif;
+            --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
         }
 
-        [data-theme="dark"] {
-            --color-bg-start: #0b1a2e;
-            --color-bg-end: #0f2238;
-            --color-bg-card: #1e2a3a;
-            --color-text: #f1f5f9;
-            --color-text-secondary: #cbd5e1;
-            --color-text-muted: #94a3b8;
-            --color-border: #2a3a4e;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: var(--font-sans);
-            background:
-                radial-gradient(circle at 10% 20%, rgba(180, 220, 255, 0.5) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(220, 200, 255, 0.3) 0%, transparent 50%),
-                linear-gradient(145deg, var(--color-bg-start), var(--color-bg-end));
-            background-attachment: fixed;
-            color: var(--color-text);
-            line-height: 1.6;
-            padding-top: var(--nav-height);
-            transition: background 0.5s, color 0.3s;
-            min-height: 100vh;
+            font-family: var(--sans);
+            background: var(--ink);
+            color: var(--txt);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        [data-theme="dark"] body {
-            background:
-                radial-gradient(circle at 20% 30%, rgba(60, 100, 180, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 80% 70%, rgba(120, 80, 200, 0.12) 0%, transparent 60%),
-                linear-gradient(145deg, var(--color-bg-start), var(--color-bg-end));
-        }
+        body.intro-active { overflow: hidden; }
 
-        body::before,
-        body::after {
-            content: '';
+        /* ═══════════════════════════════════════════════════════════════
+           烟花开场
+           ═══════════════════════════════════════════════════════════════ */
+        .intro {
             position: fixed;
-            border-radius: 50%;
+            inset: 0;
+            z-index: 9998;
+            background: radial-gradient(circle at 50% 45%, #14151c 0%, #0a0a0c 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.9s var(--ease), visibility 0.9s;
+        }
+        .intro.hidden {
+            opacity: 0;
+            visibility: hidden;
             pointer-events: none;
+        }
+        #fireworksCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 24px;
+            animation: introIn 1.4s var(--ease) both;
+        }
+        @keyframes introIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .intro-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 8px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: introIn 1.2s var(--ease) 0.5s both;
+        }
+        .intro-name {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 9vw, 5.6rem);
+            font-weight: 700;
+            color: var(--paper);
+            letter-spacing: 12px;
+            line-height: 1.1;
+            margin-bottom: 14px;
+            text-indent: 12px;
+            opacity: 0;
+            animation: introIn 1.4s var(--ease) 0.7s both;
+            text-shadow: 0 0 60px rgba(201, 168, 106, 0.25);
+        }
+        .intro-sub {
+            font-size: 0.82rem;
+            letter-spacing: 5px;
+            color: var(--txt-faint);
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: introIn 1.2s var(--ease) 1s both;
+        }
+        .intro-enter {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 40px;
+            border-radius: 40px;
+            border: 1px solid rgba(201, 168, 106, 0.35);
+            background: transparent;
+            color: var(--paper);
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+            opacity: 0;
+            animation: introIn 1.2s var(--ease) 1.4s both;
+            position: relative;
+            overflow: hidden;
+        }
+        .intro-enter::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(201, 168, 106, 0.18), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s var(--ease);
+        }
+        .intro-enter:hover::before { transform: translateX(100%); }
+        .intro-enter:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 40px rgba(201, 168, 106, 0.15);
+            transform: translateY(-2px);
+        }
+        .intro-enter .arrow {
+            transition: transform 0.3s var(--ease);
+        }
+        .intro-enter:hover .arrow {
+            transform: translateX(5px);
+        }
+        .intro-hint {
+            margin-top: 28px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--txt-faint);
+            opacity: 0;
+            animation: hintPulse 2.4s ease-in-out 2.4s infinite;
+        }
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.25; }
+            50% { opacity: 0.65; }
+        }
+
+        /* 减少动效偏好：跳过烟花 */
+        @media (prefers-reduced-motion: reduce) {
+            .intro { transition: opacity 0.25s; }
+            .intro-content, .intro-eyebrow, .intro-name, .intro-sub, .intro-enter {
+                animation: none;
+                opacity: 1;
+            }
+            .intro-hint { animation: none; opacity: 0.4; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           星空背景
+           ═══════════════════════════════════════════════════════════════ */
+        .starfield {
+            position: fixed;
+            inset: 0;
             z-index: 0;
-            opacity: 0.4;
-            filter: blur(80px);
+            pointer-events: none;
+            overflow: hidden;
         }
-        body::before {
-            width: 500px;
-            height: 500px;
-            top: -100px;
-            left: -100px;
-            background: rgba(120, 180, 255, 0.25);
+        .starfield::before,
+        .starfield::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: .35;
         }
-        body::after {
+        .starfield::before {
             width: 600px;
             height: 600px;
-            bottom: -150px;
-            right: -150px;
-            background: rgba(200, 170, 255, 0.2);
+            top: -15%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(163, 55, 44, .25), transparent 70%);
         }
-        [data-theme="dark"] body::before {
-            background: rgba(60, 120, 255, 0.15);
+        .starfield::after {
+            width: 700px;
+            height: 700px;
+            bottom: -20%;
+            right: -15%;
+            background: radial-gradient(circle, rgba(201, 168, 106, .18), transparent 70%);
         }
-        [data-theme="dark"] body::after {
-            background: rgba(160, 100, 255, 0.12);
+        .starfield .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            from { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: .5; }
+            90% { opacity: .5; }
+            to { transform: translateY(-10vh) translateX(40px); opacity: 0; }
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: var(--max-width);
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 0 20px 60px;
+            padding: 0 28px;
         }
 
-        /* ===== Navigation ===== */
-        .navbar {
+        /* ═══════════════════════════════════════════════════════════════
+           导航
+           ═══════════════════════════════════════════════════════════════ */
+        .nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--nav-height);
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--color-border);
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
-            z-index: 1000;
-            transition: background 0.3s, border-color 0.3s;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: linear-gradient(to bottom, var(--ink) 0%, transparent 100%);
+            transition: background .3s, border-color .3s;
+            border-bottom: 1px solid transparent;
         }
-        [data-theme="dark"] .navbar {
-            background: rgba(15, 23, 42, 0.75);
+        .nav.scrolled {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom-color: var(--line);
         }
-
-        .navbar .nav-inner {
+        .nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
-            max-width: var(--max-width);
-            margin: 0 auto;
+            gap: 16px;
         }
-
         .nav-brand {
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: 0.5px;
-            color: var(--color-primary);
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            color: var(--paper);
             text-decoration: none;
+            letter-spacing: 3px;
         }
-        .nav-brand span {
-            color: var(--color-secondary);
-        }
-
+        .nav-brand span { color: var(--seal); }
         .nav-links {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             list-style: none;
-            flex-wrap: wrap;
         }
         .nav-links a {
-            color: var(--color-text-secondary);
+            color: var(--txt-dim);
             text-decoration: none;
-            font-size: 0.85rem;
-            padding: 6px 12px;
+            font-size: .82rem;
+            padding: 6px 14px;
             border-radius: 20px;
-            transition: background 0.2s, color 0.2s;
-            font-weight: 500;
+            transition: color .2s, background .2s;
+            letter-spacing: .5px;
         }
         .nav-links a:hover {
-            background: var(--color-primary);
-            color: #fff;
+            color: var(--paper);
+            background: rgba(201, 168, 106, .08);
         }
-
         .nav-actions {
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .nav-actions button {
+        .icon-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
             background: transparent;
-            border: none;
+            color: var(--txt-dim);
+            font-size: .95rem;
             cursor: pointer;
-            font-size: 1.1rem;
-            padding: 6px;
-            border-radius: 30px;
-            color: var(--color-text-secondary);
-            transition: background 0.2s, color 0.2s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
+            transition: all .25s;
         }
-        .nav-actions button:hover {
-            background: var(--color-border);
-            color: var(--color-text);
+        .icon-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
         }
-        .nav-actions .print-btn {
-            font-size: 0.9rem;
-            width: auto;
-            padding: 6px 14px;
-            background: var(--color-primary);
-            color: #fff;
-            border-radius: 30px;
-            font-weight: 500;
-        }
-        .nav-actions .print-btn:hover {
-            background: var(--color-primary-dark);
-        }
-        .nav-actions .music-btn {
-            font-size: 1.2rem;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(37, 99, 235, 0.08);
-            transition: background 0.2s;
-        }
-        .nav-actions .music-btn:hover {
-            background: rgba(37, 99, 235, 0.18);
-        }
-        .nav-actions .music-btn.playing {
-            background: rgba(37, 99, 235, 0.2);
-            box-shadow: 0 0 16px rgba(37, 99, 235, 0.15);
+        .icon-btn.playing {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 16px rgba(201, 168, 106, .2);
         }
 
-        /* ===== Hero ===== */
+        /* ═══════════════════════════════════════════════════════════════
+           Hero
+           ═══════════════════════════════════════════════════════════════ */
         .hero {
+            min-height: 100vh;
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            gap: 30px;
-            padding: 40px 0 20px;
-            border-bottom: 1px solid var(--color-border);
+            padding: 120px 0 80px;
+            position: relative;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 60px;
+            align-items: center;
+        }
+        .hero-eyebrow {
+            font-size: .78rem;
+            letter-spacing: 4px;
+            color: var(--seal);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .hero-title {
+            font-family: var(--serif);
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 700;
+            color: var(--paper);
+            line-height: 1.15;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        .hero-title span {
+            color: var(--gold);
+            font-size: .5em;
+            display: block;
+            letter-spacing: 6px;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+        .hero-desc {
+            font-size: .95rem;
+            color: var(--txt-dim);
+            max-width: 520px;
             margin-bottom: 32px;
-        }
-        .hero-avatar {
-            flex-shrink: 0;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #fff;
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-        }
-        .hero-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .hero-content {
-            flex: 1;
-            min-width: 200px;
-        }
-        .hero-content h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-        .hero-content .subtitle {
-            font-size: 1rem;
-            color: var(--color-text-secondary);
-            margin-bottom: 12px;
-        }
-        .hero-content .summary {
-            color: var(--color-text-secondary);
-            max-width: 600px;
-            margin-bottom: 16px;
-            font-size: 0.95rem;
+            line-height: 1.9;
         }
         .hero-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 36px;
         }
-        .hero-tags .tag {
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(4px);
-            padding: 4px 14px;
+        .hero-tags span {
+            font-size: .78rem;
+            padding: 5px 16px;
+            border: 1px solid var(--line);
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--color-text-secondary);
-            border: 1px solid var(--color-border);
+            color: var(--txt-dim);
+            letter-spacing: .5px;
+            transition: border-color .3s, color .3s;
         }
-        [data-theme="dark"] .hero-tags .tag {
-            background: var(--color-border);
-            border-color: transparent;
-        }
-        .hero-tags .tag.highlight {
-            background: var(--color-primary);
-            color: #fff;
-            border-color: var(--color-primary);
+        .hero-tags span:hover {
+            border-color: var(--gold);
+            color: var(--gold);
         }
         .hero-contact {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            align-items: center;
         }
-        .hero-contact a {
-            color: var(--color-text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
+        .btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 30px;
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
-            transition: border 0.2s, background 0.2s;
-            backdrop-filter: blur(4px);
-        }
-        .hero-contact a:hover {
-            border-color: var(--color-primary);
-            background: var(--color-primary-light);
-            color: #fff;
-        }
-        .hero-contact .copy-btn {
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: .88rem;
+            text-decoration: none;
+            transition: all .3s var(--ease);
             cursor: pointer;
-            background: transparent;
             border: none;
-            color: var(--color-text-muted);
-            font-size: 0.8rem;
-            margin-left: 4px;
+            font-family: var(--sans);
+        }
+        .btn-primary {
+            background: var(--seal);
+            color: var(--paper);
+        }
+        .btn-primary:hover {
+            background: var(--seal-l);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(163, 55, 44, .3);
+        }
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--txt-dim);
+        }
+        .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
         }
 
-        /* ===== Highlights ===== */
-        .highlights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-        .highlight-card {
-            background: var(--color-bg-card);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius);
-            padding: 20px 16px;
-            text-align: center;
-            border: 1px solid var(--color-border);
-            box-shadow: var(--shadow-sm);
-            transition: transform var(--transition), box-shadow var(--transition);
-        }
-        .highlight-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-        .highlight-card .number {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--color-primary);
-            line-height: 1.2;
-        }
-        .highlight-card .label {
-            font-size: 0.85rem;
-            color: var(--color-text-secondary);
-            margin-top: 4px;
-        }
-
-        /* ===== Section Titles ===== */
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin: 40px 0 20px;
-            letter-spacing: -0.3px;
+        .hero-portrait {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--line);
             position: relative;
-            display: inline-block;
-            color: var(--color-text);
+            flex-shrink: 0;
+            box-shadow: 0 0 60px rgba(163, 55, 44, .15);
         }
-        .section-title::after {
+        .hero-portrait::after {
             content: '';
             position: absolute;
-            left: 0;
-            bottom: -4px;
-            width: 40px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-            border-radius: 4px;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 168, 106, .25);
+            margin: 6px;
+            pointer-events: none;
         }
-
-        /* ===== Tabs ===== */
-        .tabs-container {
-            margin-bottom: 24px;
-        }
-        .tabs-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            border-bottom: 2px solid var(--color-border);
-            padding-bottom: 4px;
-            margin-bottom: 20px;
-        }
-        .tabs-list button {
-            background: transparent;
-            border: none;
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--color-text-muted);
-            border-radius: 30px 30px 0 0;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s, border-color 0.2s;
-            border-bottom: 3px solid transparent;
-            font-family: inherit;
-        }
-        .tabs-list button:hover {
-            color: var(--color-text);
-            background: rgba(255,255,255,0.3);
-        }
-        .tabs-list button[aria-selected="true"] {
-            color: var(--color-primary);
-            border-bottom-color: var(--color-primary);
-            background: transparent;
-            font-weight: 600;
-        }
-        .tab-panel {
-            display: none;
-            animation: fadeIn 0.25s ease;
-        }
-        .tab-panel[aria-hidden="false"] {
+        .hero-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== Experience Cards ===== */
-        .exp-item {
-            background: var(--color-bg-card);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            margin-bottom: 16px;
-            border: 1px solid var(--color-border);
-            box-shadow: var(--shadow-sm);
-            transition: box-shadow var(--transition);
-        }
-        .exp-item:hover {
-            box-shadow: var(--shadow-md);
-        }
-        .exp-header {
+        .hero-portrait .avatar-fallback {
+            width: 100%;
+            height: 100%;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--serif);
+            font-size: 4rem;
+            color: var(--gold);
+            background: var(--ink2);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: .72rem;
+            letter-spacing: 4px;
+            color: var(--txt-faint);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: .3; }
+            50% { opacity: .8; }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           章节
+           ═══════════════════════════════════════════════════════════════ */
+        section {
+            padding: 100px 0;
+            scroll-margin-top: 60px;
+        }
+        .section-head { margin-bottom: 56px; }
+        .section-eyebrow {
+            font-size: .72rem;
+            letter-spacing: 4px;
+            color: var(--seal);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: var(--serif);
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            color: var(--paper);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .section-line {
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--seal), var(--gold));
+            border-radius: 3px;
+            margin-top: 16px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .7s var(--ease), transform .7s var(--ease);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 关于 */
+        .about-text {
+            max-width: 760px;
+            font-size: 1rem;
+            color: var(--txt-dim);
+            line-height: 2;
+        }
+        .about-text strong { color: var(--paper); font-weight: 500; }
+        .about-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .meta-item {
+            border-left: 2px solid var(--line);
+            padding-left: 16px;
+        }
+        .meta-item .meta-label {
+            font-size: .72rem;
+            letter-spacing: 2px;
+            color: var(--txt-faint);
+            margin-bottom: 4px;
+        }
+        .meta-item .meta-value {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            color: var(--gold);
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--seal), var(--gold), transparent);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 48px;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 8px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--seal);
+            box-shadow: 0 0 0 4px rgba(163, 55, 44, .15);
+        }
+        .timeline-period {
+            font-size: .78rem;
+            letter-spacing: 1px;
+            color: var(--txt-faint);
+            margin-bottom: 6px;
+        }
+        .timeline-title {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            color: var(--paper);
+            margin-bottom: 2px;
+        }
+        .timeline-org {
+            font-size: .85rem;
+            color: var(--seal);
+            margin-bottom: 14px;
+        }
+        .timeline-desc {
+            font-size: .92rem;
+            color: var(--txt-dim);
+            line-height: 1.9;
+            list-style: none;
+        }
+        .timeline-desc li {
+            position: relative;
+            padding-left: 18px;
             margin-bottom: 8px;
         }
-        .exp-header .exp-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        .exp-header .exp-org {
-            color: var(--color-text-secondary);
-            font-weight: 500;
-        }
-        .exp-header .exp-period {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            font-weight: 400;
-        }
-        .exp-details {
-            list-style: none;
-            padding-left: 0;
-        }
-        .exp-details li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 6px;
-            font-size: 0.92rem;
-            color: var(--color-text-secondary);
-        }
-        .exp-details li::before {
-            content: "▹";
+        .timeline-desc li::before {
+            content: '—';
             position: absolute;
             left: 0;
-            color: var(--color-primary);
-            font-weight: 700;
-        }
-        .exp-details li strong {
-            color: var(--color-text);
-            font-weight: 600;
+            color: var(--gold-d);
+            font-size: .8rem;
         }
 
-        /* ===== Project Cards ===== */
-        .project-grid {
+        /* 卡片 */
+        .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-        .project-card {
-            background: var(--color-bg-card);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius);
-            padding: 20px;
-            border: 1px solid var(--color-border);
-            box-shadow: var(--shadow-sm);
-            transition: transform var(--transition), box-shadow var(--transition);
-            display: flex;
-            flex-direction: column;
-        }
-        .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-        .project-card .project-name {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .project-card .project-period {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            margin-bottom: 8px;
-        }
-        .project-card .project-desc {
-            font-size: 0.9rem;
-            color: var(--color-text-secondary);
-            flex: 1;
-            margin-bottom: 10px;
-        }
-        .project-card .project-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-        .project-card .project-stack span {
-            background: rgba(255,255,255,0.5);
-            backdrop-filter: blur(4px);
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--color-text-muted);
-            border: 1px solid var(--color-border);
-        }
-        [data-theme="dark"] .project-card .project-stack span {
-            background: var(--color-border);
-        }
-        .project-card .project-result {
-            font-size: 0.9rem;
-            color: var(--color-primary);
-            font-weight: 500;
-            border-top: 1px solid var(--color-border);
-            padding-top: 10px;
-            margin-top: 4px;
-        }
-
-        /* ===== Skills ===== */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 16px 0 8px;
-        }
-        .skill-group {
-            background: var(--color-bg-card);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius);
-            padding: 16px 18px;
-            border: 1px solid var(--color-border);
-        }
-        .skill-group .skill-label {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--color-text-secondary);
-            margin-bottom: 8px;
-            display: block;
-        }
-        .skill-group .skill-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .skill-group .skill-items span {
-            background: rgba(255,255,255,0.5);
-            backdrop-filter: blur(4px);
-            padding: 2px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--color-text-secondary);
-            border: 1px solid var(--color-border);
-        }
-        [data-theme="dark"] .skill-group .skill-items span {
-            background: var(--color-border);
-        }
-        .skill-group .skill-items span.proficient {
-            background: var(--color-primary);
-            color: #fff;
-            border-color: var(--color-primary);
-        }
-
-        /* ===== Portfolio (作品集) ===== */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 16px 0 8px;
-        }
-        .portfolio-item {
+        .card {
+            background: var(--ink2);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 28px 24px;
+            transition: border-color .3s, transform .3s var(--ease), box-shadow .3s;
             position: relative;
             overflow: hidden;
-            border-radius: var(--radius);
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: transform var(--transition), box-shadow var(--transition);
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+        .card:hover {
+            border-color: rgba(201, 168, 106, .3);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, .3);
+        }
+        .card:hover::before { opacity: 1; }
+        .card-icon {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .card-title {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: var(--paper);
+            margin-bottom: 8px;
+        }
+        .card-desc {
+            font-size: .88rem;
+            color: var(--txt-dim);
+            line-height: 1.8;
+        }
+        .card-tags {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 16px;
+        }
+        .card-tags span {
+            font-size: .72rem;
+            padding: 3px 12px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            color: var(--txt-faint);
+        }
+
+        /* 作品集 */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .portfolio-item {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform .3s var(--ease), border-color .3s;
+            background: var(--ink2);
         }
         .portfolio-item:hover {
             transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
+            border-color: rgba(201, 168, 106, .3);
         }
         .portfolio-item img {
             width: 100%;
-            height: auto;
-            max-height: 300px;
+            height: 200px;
             object-fit: contain;
-            border-radius: var(--radius-sm);
+            background: var(--ink);
+            padding: 16px;
+            display: block;
         }
-        .portfolio-item .portfolio-label {
-            margin-top: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--color-text-secondary);
+        .portfolio-label {
+            padding: 14px 18px;
+            font-size: .85rem;
+            color: var(--txt-dim);
+            border-top: 1px solid var(--line);
             text-align: center;
         }
-        .portfolio-item .placeholder {
+        .portfolio-placeholder {
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 200px;
-            color: var(--color-text-muted);
-            font-size: 0.9rem;
+            color: var(--txt-faint);
+            font-size: .9rem;
+            background: var(--ink);
         }
 
-        /* ===== Education & Cert ===== */
-        .edu-cert-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 8px;
-        }
-        @media (max-width: 700px) {
-            .edu-cert-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .edu-card,
-        .cert-card {
-            background: var(--color-bg-card);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            border: 1px solid var(--color-border);
-        }
-        .edu-card h3,
-        .cert-card h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .edu-card .meta,
-        .cert-card .meta {
-            color: var(--color-text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-        }
-        .edu-card .course-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 8px;
-        }
-        .edu-card .course-tags span {
-            background: rgba(255,255,255,0.5);
-            backdrop-filter: blur(4px);
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: var(--color-text-muted);
-            border: 1px solid var(--color-border);
-        }
-        [data-theme="dark"] .edu-card .course-tags span {
-            background: var(--color-border);
-        }
-        .cert-card ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        .cert-card ul li {
-            padding: 4px 0;
-            font-size: 0.92rem;
-            color: var(--color-text-secondary);
-            border-bottom: 1px solid var(--color-border);
-        }
-        .cert-card ul li:last-child {
-            border-bottom: none;
-        }
-        .cert-card ul li::before {
-            content: "🏅 ";
-            font-size: 0.85rem;
-        }
-
-        /* ===== Lightbox ===== */
+        /* 灯箱 */
         .lightbox {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
+            inset: 0;
+            background: rgba(0, 0, 0, .92);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            padding: 40px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
-            padding: 30px;
+            transition: opacity .3s;
+            backdrop-filter: blur(12px);
         }
         .lightbox.active {
             opacity: 1;
@@ -752,737 +725,778 @@
         }
         .lightbox img {
             max-width: 90%;
-            max-height: 90%;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
             object-fit: contain;
         }
-        .lightbox .close-btn {
+        .lightbox-close {
             position: absolute;
-            top: 30px;
-            right: 40px;
-            font-size: 2.5rem;
-            color: #fff;
-            cursor: pointer;
+            top: 24px;
+            right: 32px;
+            font-size: 2rem;
+            color: var(--paper);
             background: none;
             border: none;
-            transition: transform 0.2s;
-        }
-        .lightbox .close-btn:hover {
-            transform: scale(1.2);
-        }
-
-        /* ===== Footer ===== */
-        .footer {
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid var(--color-border);
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-        }
-
-        /* ===== Back to top ===== */
-        .back-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            color: #fff;
-            border: none;
             cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow-md);
-            transition: opacity 0.3s, transform 0.3s;
-            opacity: 0;
-            transform: scale(0.8);
-            pointer-events: none;
-            z-index: 999;
+            opacity: .6;
+            transition: opacity .2s;
         }
-        .back-top.visible {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto;
+        .lightbox-close:hover { opacity: 1; }
+
+        /* 教育 */
+        .edu-card {
+            background: var(--ink2);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
         }
-        .back-top:hover {
-            background: var(--color-primary-dark);
+        .edu-school {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            color: var(--paper);
+            margin-bottom: 4px;
+        }
+        .edu-major {
+            font-size: .9rem;
+            color: var(--seal);
+            margin-bottom: 12px;
+        }
+        .edu-note {
+            font-size: .88rem;
+            color: var(--txt-dim);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .edu-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .edu-tags span {
+            font-size: .72rem;
+            padding: 3px 12px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            color: var(--txt-faint);
         }
 
-        /* ===== Print Styles ===== */
-        @media print {
-            body {
-                background: #fff !important;
-                color: #000 !important;
-                padding-top: 0 !important;
-            }
-            .navbar,
-            .back-top,
-            .nav-actions .print-btn,
-            .nav-actions .theme-toggle,
-            .nav-actions .music-btn,
-            .lightbox {
-                display: none !important;
-            }
-            .container {
-                max-width: 100% !important;
-                padding: 0 20px !important;
-            }
-            .hero {
-                border-bottom-color: #ccc;
-                padding-top: 20px;
-            }
-            .highlight-card,
-            .exp-item,
-            .project-card,
-            .skill-group,
-            .edu-card,
-            .cert-card,
-            .portfolio-item {
-                background: #fff !important;
-                border-color: #ddd !important;
-                box-shadow: none !important;
-                backdrop-filter: none !important;
-            }
-            .tabs-list button {
-                color: #000 !important;
-                border-bottom-color: transparent !important;
-            }
-            .tabs-list button[aria-selected="true"] {
-                border-bottom-color: #000 !important;
-                color: #000 !important;
-            }
-            .tab-panel {
-                display: block !important;
-                animation: none !important;
-            }
-            .tabs-list {
-                border-bottom-color: #ccc;
-            }
-            .project-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .hero-contact a {
-                border-color: #ccc;
-                background: #f9f9f9;
-            }
-            .nav-brand {
-                color: #000;
-            }
-            .section-title::after {
-                background: #000;
-            }
-            .portfolio-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
+        .cert-list { list-style: none; }
+        .cert-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: .92rem;
+            color: var(--txt-dim);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .cert-list li:last-child { border-bottom: none; }
+        .cert-list li::before {
+            content: '◇';
+            color: var(--gold);
+            font-size: .8rem;
+            flex-shrink: 0;
+            margin-top: 3px;
         }
 
-        /* ===== Responsive ===== */
-        @media (max-width: 700px) {
-            .navbar {
-                padding: 0 12px;
-                height: 58px;
-            }
-            .nav-links {
-                display: none;
-            }
-            .hero {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                padding-top: 20px;
-            }
-            .hero-content .summary {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-contact {
-                justify-content: center;
-            }
-            .highlights {
-                grid-template-columns: 1fr 1fr;
-            }
-            .section-title {
-                font-size: 1.3rem;
-            }
-            .exp-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .project-grid {
+        /* 页脚 */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--line);
+            text-align: center;
+        }
+        .footer-quote {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: var(--txt-faint);
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+        }
+        .footer-copy {
+            font-size: .75rem;
+            color: var(--txt-faint);
+            letter-spacing: 1px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero-grid {
                 grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
             }
-            .skills-grid {
-                grid-template-columns: 1fr 1fr;
+            .hero-portrait {
+                margin: 0 auto;
+                width: 160px;
+                height: 160px;
+                order: -1;
             }
-            .portfolio-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .nav-actions .print-btn span {
-                display: none;
-            }
-            .nav-actions .print-btn {
-                padding: 6px 10px;
-            }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-tags, .hero-contact { justify-content: center; }
+            .nav-links { display: none; }
+            section { padding: 70px 0; }
+            .timeline { padding-left: 22px; }
+            .timeline-item::before { left: -22px; }
         }
         @media (max-width: 480px) {
-            .highlights {
-                grid-template-columns: 1fr;
-            }
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
+            .container { padding: 0 18px; }
+            .card-grid, .portfolio-grid { grid-template-columns: 1fr; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
             }
-            html {
-                scroll-behavior: auto;
+            html { scroll-behavior: auto; }
+        }
+
+        /* 打印 */
+        @media print {
+            body { background: #fff; color: #111; }
+            .intro, .nav, .starfield, .scroll-hint, .lightbox { display: none !important; }
+            .container { max-width: 100%; }
+            section { padding: 40px 0; }
+            .card, .edu-card, .portfolio-item {
+                border-color: #ddd;
+                background: #fafafa;
             }
+            .hero { min-height: auto; padding: 40px 0; }
+            .hero-title, .section-title, .timeline-title, .card-title, .edu-school {
+                color: #111;
+            }
+            .hero-desc, .about-text, .timeline-desc, .card-desc {
+                color: #333;
+            }
+            .btn { display: none; }
+            .portfolio-item img { height: 120px; }
         }
     </style>
 </head>
-<body>
+<body class="intro-active">
 
-    <!-- ===== Navigation ===== -->
-    <nav class="navbar" role="navigation" aria-label="主导航">
+    <!-- ═══════════════ 烟花开场 ═══════════════ -->
+    <div class="intro" id="intro">
+        <canvas id="fireworksCanvas"></canvas>
+        <div class="intro-content">
+            <div class="intro-eyebrow">Personal Resume</div>
+            <h1 class="intro-name">岳奥飞</h1>
+            <div class="intro-sub">YUE AOFEI · 计算机科学与技术</div>
+            <button class="intro-enter" id="enterBtn">
+                进入简历 <span class="arrow">→</span>
+            </button>
+            <div class="intro-hint">点击任意处进入</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ 星空背景 ═══════════════ -->
+    <div class="starfield" id="starfield"></div>
+
+    <!-- ═══════════════ 导航 ═══════════════ -->
+    <nav class="nav" id="nav">
         <div class="nav-inner">
             <a href="#" class="nav-brand">岳奥飞<span>.</span></a>
             <ul class="nav-links">
-                <li><a href="#highlights">亮点</a></li>
+                <li><a href="#about">关于</a></li>
                 <li><a href="#experience">经历</a></li>
-                <li><a href="#projects">项目</a></li>
                 <li><a href="#skills">技能</a></li>
-                <li><a href="#portfolio">作品</a></li>
+                <li><a href="#portfolio">证书</a></li>
                 <li><a href="#education">教育</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="music-btn" id="musicBtn" aria-label="播放/暂停背景音乐" title="舒缓轻音乐">🎵</button>
-                <button class="theme-toggle" aria-label="切换深色/浅色模式" title="切换主题">🌓</button>
-                <button class="print-btn" onclick="window.print()" aria-label="打印简历"><span>🖨️ 打印</span></button>
+                <button class="icon-btn" id="musicBtn" aria-label="播放背景音乐" title="背景音乐">♪</button>
             </div>
         </div>
     </nav>
 
-    <!-- ===== Main Container ===== -->
-    <main class="container">
-
-        <!-- ===== HERO ===== -->
-        <section class="hero" id="hero">
-            <div class="hero-avatar" id="avatarContainer">
-                <span id="avatarText">岳</span>
-            </div>
-            <div class="hero-content">
-                <h1>岳奥飞</h1>
-                <div class="subtitle">计算机科学与技术（校企深度合作） · 大一</div>
-                <p class="summary">执行力强，善于统筹协调。拥有多次大型校园活动策划经验，兼备技术基础与人文素养，持续自我精进。</p>
-                <div class="hero-tags">
-                    <span class="tag highlight">C语言基础</span>
-                    <span class="tag">Office 精通</span>
-                    <span class="tag">日语 N3 相当</span>
-                    <span class="tag">AI 训练师初级</span>
-                    <span class="tag">活动策划</span>
+    <!-- ═══════════════ Hero ═══════════════ -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <div class="hero-eyebrow">个人简历 · 二〇二六</div>
+                    <h1 class="hero-title">
+                        岳奥飞
+                        <span>YUE AOFEI</span>
+                    </h1>
+                    <p class="hero-desc">
+                        计算机科学与技术专业大一学生。执行力强，善于统筹协调，拥有多次校园活动策划与班级管理经验。兼备技术基础与人文素养，在组织与执行中追求卓越。
+                    </p>
+                    <div class="hero-tags">
+                        <span>C 语言基础</span>
+                        <span>Office 精通</span>
+                        <span>日语 N3 相当</span>
+                        <span>AI 训练师初级</span>
+                        <span>活动策划</span>
+                    </div>
+                    <div class="hero-contact">
+                        <a href="tel:18831154951" class="btn btn-primary">📞 18831154951</a>
+                        <a href="#" class="btn btn-ghost" id="emailBtn">✉️ 复制邮箱</a>
+                    </div>
                 </div>
-                <div class="hero-contact">
-                    <a href="tel:18831154951">📞 18831154951</a>
-                    <a href="#" id="email-link" onclick="return false;">✉️ 2472163485@qq.com <button class="copy-btn" id="copy-email" aria-label="复制邮箱">📋</button></a>
+                <div class="hero-portrait" id="portrait">
+                    <div class="avatar-fallback">岳</div>
                 </div>
             </div>
-        </section>
+        </div>
+        <div class="scroll-hint">向下滚动 ↓</div>
+    </section>
 
-        <!-- ===== HIGHLIGHTS ===== -->
-        <section id="highlights">
-            <h2 class="section-title">亮点成果</h2>
-            <div class="highlights" id="highlights-container"></div>
-        </section>
-
-        <!-- ===== EXPERIENCE (Tabs) ===== -->
-        <section id="experience">
-            <h2 class="section-title">经历</h2>
-            <div class="tabs-container" id="experience-tabs">
-                <div class="tabs-list" role="tablist" aria-label="经历分类"></div>
-                <div class="tab-panels"></div>
+    <!-- ═══════════════ 关于 ═══════════════ -->
+    <section id="about">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">About</div>
+                <h2 class="section-title">关于我</h2>
+                <div class="section-line"></div>
             </div>
-        </section>
-
-        <!-- ===== PROJECTS (Tabs) ===== -->
-        <section id="projects">
-            <h2 class="section-title">项目</h2>
-            <div class="tabs-container" id="projects-tabs">
-                <div class="tabs-list" role="tablist" aria-label="项目分类"></div>
-                <div class="tab-panels"></div>
+            <div class="about-text reveal">
+                <p>
+                    我是<strong>岳奥飞</strong>，河北地质大学<strong>计算机科学与技术（校企深度合作）</strong>专业 2026 级学生。本专业与河北地信集团、东软教育科技集团等多家行业龙头企业深度合作培养，注重企业级项目开发流程与工程实践能力。
+                </p>
+                <p style="margin-top: 16px;">
+                    高中阶段担任<strong>班级卫生委员</strong>与<strong>政治课代表</strong>，带领班级多次获评“校级优秀卫生班集体”，并在流感高发期发起消毒防护专项行动，保障全班零传染、全勤上课。同时独立策划并执行<strong>6 场校级文艺晚会</strong>，覆盖观众 420+ 人次，活动满意度 9.4/10。
+                </p>
+                <p style="margin-top: 16px;">
+                    持有<strong>阿里巴巴人工智能训练师（初级）</strong>证书，了解 AI 产品基础逻辑与数据标注流程。持续学习，保持对技术与人文的双重关注。
+                </p>
             </div>
-        </section>
-
-        <!-- ===== SKILLS ===== -->
-        <section id="skills">
-            <h2 class="section-title">技能矩阵</h2>
-            <div class="skills-grid" id="skills-container"></div>
-        </section>
-
-        <!-- ===== PORTFOLIO (作品集) ===== -->
-        <section id="portfolio">
-            <h2 class="section-title">作品集</h2>
-            <div class="portfolio-grid" id="portfolio-grid"></div>
-        </section>
-
-        <!-- ===== EDUCATION & CERTIFICATES ===== -->
-        <section id="education">
-            <h2 class="section-title">教育 · 证书</h2>
-            <div class="edu-cert-grid">
-                <div class="edu-card" id="education-card"></div>
-                <div class="cert-card" id="certificates-card"></div>
+            <div class="about-meta reveal">
+                <div class="meta-item">
+                    <div class="meta-label">所在院校</div>
+                    <div class="meta-value">河北地质大学</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">专业方向</div>
+                    <div class="meta-value">计算机科学与技术</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">语言能力</div>
+                    <div class="meta-value">日语 N3 相当</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">职业认证</div>
+                    <div class="meta-value">AI 训练师初级</div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- ===== FOOTER ===== -->
-        <footer class="footer">
-            <p>© 2026 岳奥飞 · 最后更新：2026年9月</p>
-        </footer>
+    <!-- ═══════════════ 经历 ═══════════════ -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">Experience</div>
+                <h2 class="section-title">经历</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-period">2024.09 – 2026.06</div>
+                    <div class="timeline-title">班级卫生委员</div>
+                    <div class="timeline-org">邯郸市第二中学</div>
+                    <ul class="timeline-desc">
+                        <li>制定并执行《班级卫生轮值班表》，覆盖每日 3 时段、7 个责任区域，带领班级累计获评“校级优秀卫生班集体”多次</li>
+                        <li>建立巡查反馈机制，将卫生问题响应时间由 30 分钟压缩至 10 分钟，整体达标率由 82% 提升至 98%</li>
+                        <li>每月组织卫生总结会，优化分工方案，团队协作效率提升约 25%，经验推广至同年级 4 个班级</li>
+                        <li>流感高发期发起“消毒防护专项行动”，协调物资与每日通风，保障全班 56 名同学零传染、全勤上课</li>
+                    </ul>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-period">2023.09 – 2024.06</div>
+                    <div class="timeline-title">班级政治课代表</div>
+                    <div class="timeline-org">邯郸市第二中学</div>
+                    <ul class="timeline-desc">
+                        <li>负责课前时政播报与课堂互动组织，协助老师完成作业收发与课堂纪律维护</li>
+                        <li>主动整理知识点框架与复习提纲分享全班，帮助班级政治学科平均分提升约 8 分</li>
+                    </ul>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-period">2023 – 2026</div>
+                    <div class="timeline-title">社区志愿服务</div>
+                    <div class="timeline-org">邯郸市（高中期间）</div>
+                    <ul class="timeline-desc">
+                        <li>积极参与校内外各类志愿服务活动，涵盖社区环境维护、校园大型活动引导等场景，具备良好的服务意识与社会责任感</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </main>
+    <!-- ═══════════════ 技能 ═══════════════ -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">Skills & Projects</div>
+                <h2 class="section-title">技能与项目</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="card-grid">
+                <div class="card reveal">
+                    <span class="card-icon">⌨️</span>
+                    <div class="card-title">编程基础</div>
+                    <div class="card-desc">基础掌握 C 语言，能够独立完成结构化程序设计与基础算法实现（排序、查找、链表操作等），具备良好的代码规范与调试习惯。</div>
+                    <div class="card-tags"><span>C 语言</span><span>算法基础</span><span>代码规范</span></div>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">📊</span>
+                    <div class="card-title">办公与协作</div>
+                    <div class="card-desc">熟练使用 Office 全家桶，擅长 Word 长文档排版、Excel 数据整理与预算编制、PPT 汇报制作。</div>
+                    <div class="card-tags"><span>Word</span><span>Excel</span><span>PPT</span></div>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">🤖</span>
+                    <div class="card-title">AI 基础</div>
+                    <div class="card-desc">了解人工智能产品基础逻辑与数据标注流程，具备 AI 产品基础测试与标注数据质量评估能力。持有阿里巴巴人工智能训练师（初级）证书。</div>
+                    <div class="card-tags"><span>AI 训练师</span><span>数据标注</span><span>模型测试</span></div>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">🎤</span>
+                    <div class="card-title">活动策划与执行</div>
+                    <div class="card-desc">独立策划并落地执行 6 场校级文艺晚会（元旦 3 场、中秋 3 场），单场覆盖观众约 70 余人，统筹演职人员 15-20 人。负责全流程项目管控，确保所有场次准时开幕、零安全事故。</div>
+                    <div class="card-tags"><span>活动策划</span><span>现场调度</span><span>预算管理</span><span>复盘总结</span></div>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">🗣️</span>
+                    <div class="card-title">语言能力</div>
+                    <div class="card-desc">中文母语。日语高考 114 分（满分 150），具备良好的日文阅读与基础听说能力，能够阅读基础日文技术文档。</div>
+                    <div class="card-tags"><span>中文</span><span>日语 N3 相当</span></div>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">🤝</span>
+                    <div class="card-title">组织与协调</div>
+                    <div class="card-desc">多次担任班级干部与活动负责人，擅长跨组协作与人员调度。在卫生管理与晚会执行中，均实现了流程标准化与效率提升。</div>
+                    <div class="card-tags"><span>团队管理</span><span>跨组协作</span><span>流程优化</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ===== Back to Top ===== -->
-    <button class="back-top" id="back-top" aria-label="返回顶部">↑</button>
+    <!-- ═══════════════ 证书 ═══════════════ -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">Certificates</div>
+                <h2 class="section-title">证书与作品</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="portfolio-grid" id="portfolioGrid">
+                <div class="portfolio-item reveal" data-src="训练师初级.jpg">
+                    <img src="训练师初级.jpg" alt="阿里巴巴人工智能训练师（初级）" loading="lazy">
+                    <div class="portfolio-label">阿里巴巴人工智能训练师（初级）</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ===== Lightbox ===== -->
+    <!-- ═══════════════ 教育 ═══════════════ -->
+    <section id="education">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-eyebrow">Education</div>
+                <h2 class="section-title">教育 · 荣誉</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="edu-card reveal">
+                <div class="edu-school">河北地质大学</div>
+                <div class="edu-major">计算机科学与技术（校企深度合作） · 2026.09 – 2030.06</div>
+                <div class="edu-note">与河北地信集团、东软教育科技集团等多家行业龙头企业深度合作培养</div>
+                <div class="edu-tags">
+                    <span>C 语言程序设计</span>
+                    <span>数据结构与算法</span>
+                    <span>数据库原理</span>
+                    <span>计算机网络</span>
+                    <span>软件工程</span>
+                    <span>人工智能导论</span>
+                </div>
+            </div>
+            <ul class="cert-list reveal">
+                <li>阿里巴巴人工智能训练师（初级） — 2025.06</li>
+                <li>校级三好学生（邯郸市第二中学，2024 年度）</li>
+                <li>校级优秀卫生班集体（多次，2024–2026）</li>
+                <li>计算机等级考试二级 C 语言（备考中，预计 2027.03）</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════════════ 页脚 ═══════════════ -->
+    <footer>
+        <div class="container">
+            <div class="footer-quote">「 用执行回应期待，以持续学习面向未来 」</div>
+            <div class="footer-copy">© 2026 岳奥飞 · 最后更新：2026 年 9 月</div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════ 灯箱 ═══════════════ -->
     <div class="lightbox" id="lightbox">
-        <button class="close-btn" id="lightbox-close">✕</button>
-        <img id="lightbox-img" src="" alt="放大查看">
+        <button class="lightbox-close" id="lightboxClose">✕</button>
+        <img id="lightboxImg" src="" alt="查看大图">
     </div>
 
     <script>
         // ============================================================
-        // DATA
+        // 烟花开场动画
         // ============================================================
-        const resume = {
-            highlights: [
-                { number: '98%', label: '班级卫生达标率' },
-                { number: '6 场', label: '校级文艺晚会策划' },
-                { number: '9.4/10', label: '活动满意度' },
-                { number: '56 人', label: '零传染·全勤保障' }
-            ],
-            experiences: [{
-                type: '学生干部',
-                title: '班级卫生委员',
-                organization: '邯郸市第二中学',
-                period: '2024.09 – 2026.06',
-                details: [
-                    '制定并执行《班级卫生轮值班表》，覆盖每日3时段、7个责任区域，<strong>带领班级累计获评“校级优秀卫生班集体”多次</strong>',
-                    '建立巡查反馈机制，将卫生问题响应时间由30分钟压缩至10分钟，<strong>整体达标率由82%提升至98%</strong>',
-                    '每月组织卫生总结会，优化分工方案，<strong>团队协作效率提升约25%</strong>，经验推广至同年级4个班级',
-                    '流感高发期发起“消毒防护专项行动”，协调物资与每日通风，<strong>保障全班56名同学零传染、全勤上课</strong>'
-                ]
-            }, {
-                type: '学生干部',
-                title: '班级政治课代表',
-                organization: '邯郸市第二中学',
-                period: '2023.09 – 2024.06',
-                details: [
-                    '负责课前时政播报与课堂互动组织，协助老师完成作业收发与课堂纪律维护',
-                    '主动整理知识点框架与复习提纲分享全班，<strong>帮助班级政治学科平均分提升约8分</strong>'
-                ]
-            }, {
-                type: '志愿服务',
-                title: '社区志愿服务',
-                organization: '邯郸市（高中期间）',
-                period: '2023 – 2026',
-                details: [
-                    '积极参与校内外各类志愿服务活动，涵盖社区环境维护、校园大型活动引导等场景，具备良好的服务意识与社会责任感'
-                ]
-            }],
-            projects: [{
-                category: '校园文艺晚会',
-                name: '元旦晚会 & 中秋晚会',
-                period: '2023 – 2025（高中阶段持续组织）',
-                description: '独立策划并落地执行 6 场校级文艺晚会（元旦3场、中秋3场），单场覆盖观众约70余人，统筹演职人员15-20人。负责全流程项目管控，包括方案设计、节目征集与审核、彩排排期、物料采购及现场调度，确保所有场次准时开幕、零安全事故。',
-                stack: ['活动策划', '现场调度', '预算管理', '复盘总结'],
-                result: '活动满意度 9.4/10 · 累计参与 420+ 人次 · 现场转场平均低于90秒'
-            }, {
-                category: '其他实践',
-                name: '志愿服务与校园协助',
-                period: '2023 – 2026',
-                description: '多次参与校园开放日、新生引导、社区环保等志愿活动，协助学校完成大型活动的现场秩序维护与后勤保障。',
-                stack: ['志愿服务', '沟通协调', '后勤支持'],
-                result: '累计服务数百人次，获师生一致好评'
-            }],
-            skills: {
-                '编程语言': ['C语言（基础）'],
-                '办公协作': ['Word 长文档', 'Excel 数据/预算', 'PPT 汇报'],
-                '语言能力': ['中文（母语）', '日语（N3 相当）'],
-                '其他领域': ['AI基础（阿里训练师初级）', '活动策划与执行']
-            },
-            education: {
-                school: '河北地质大学',
-                major: '计算机科学与技术（校企深度合作）',
-                period: '2026.09 – 2030.06',
-                courses: ['C语言程序设计', '数据结构与算法', '数据库原理', '计算机网络', '软件工程', '人工智能导论'],
-                note: '与河北地信集团、东软教育科技集团等多家行业龙头企业深度合作培养'
-            },
-            certificates: [
-                '阿里巴巴人工智能训练师（初级） — 2025.06',
-                '校级三好学生（邯郸市第二中学，2024年度）',
-                '校级优秀卫生班集体（多次，2024–2026）',
-                '计算机等级考试二级C语言（备考中，预计2027.03）'
-            ]
-        };
+        (function fireworks() {
+            const intro = document.getElementById('intro');
+            const canvas = document.getElementById('fireworksCanvas');
+            const ctx = canvas.getContext('2d');
+            const enterBtn = document.getElementById('enterBtn');
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // ============================================================
-        // RENDER HELPERS
-        // ============================================================
-        function $(sel, ctx) { return (ctx || document).querySelector(sel); }
-        function $$(sel, ctx) { return Array.from((ctx || document).querySelectorAll(sel)); }
-        function createElem(tag, cls, html) {
-            const el = document.createElement(tag);
-            if (cls) el.className = cls;
-            if (html) el.innerHTML = html;
-            return el;
-        }
+            let W = 0, H = 0, dpr = 1;
+            let particles = [];
+            let rafId = null;
+            let entered = false;
+            const MAX_PARTICLES = 900;
 
-        function renderHighlights() {
-            const container = $('#highlights-container');
-            container.innerHTML = '';
-            resume.highlights.forEach(h => {
-                container.appendChild(createElem('div', 'highlight-card',
-                    `<div class="number">${h.number}</div><div class="label">${h.label}</div>`));
-            });
-        }
-
-        function renderTabs(containerId, items, groupKey, renderItemFn) {
-            const container = document.getElementById(containerId);
-            const list = container.querySelector('.tabs-list');
-            const panels = container.querySelector('.tab-panels');
-            list.innerHTML = '';
-            panels.innerHTML = '';
-
-            const cats = [...new Set(items.map(item => item[groupKey]))];
-            if (cats.length === 0) return;
-
-            cats.forEach((cat, idx) => {
-                const btn = document.createElement('button');
-                btn.setAttribute('role', 'tab');
-                btn.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
-                btn.setAttribute('aria-controls', `panel-${containerId}-${idx}`);
-                btn.id = `tab-${containerId}-${idx}`;
-                btn.textContent = cat;
-                btn.addEventListener('click', () => switchTab(containerId, idx));
-                list.appendChild(btn);
-
-                const panel = document.createElement('div');
-                panel.setAttribute('role', 'tabpanel');
-                panel.id = `panel-${containerId}-${idx}`;
-                panel.setAttribute('aria-labelledby', `tab-${containerId}-${idx}`);
-                panel.setAttribute('aria-hidden', idx === 0 ? 'false' : 'true');
-                panel.className = 'tab-panel';
-                items.filter(item => item[groupKey] === cat)
-                    .forEach(item => panel.appendChild(renderItemFn(item)));
-                panels.appendChild(panel);
-            });
-
-            list.addEventListener('keydown', (e) => {
-                const tabs = $$('button', list);
-                const current = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true');
-                let newIdx = current;
-                if (e.key === 'ArrowRight') { e.preventDefault(); newIdx = (current + 1) % tabs.length; }
-                if (e.key === 'ArrowLeft') { e.preventDefault(); newIdx = (current - 1 + tabs.length) % tabs.length; }
-                if (newIdx !== current) {
-                    switchTab(containerId, newIdx);
-                    tabs[newIdx].focus();
-                }
-            });
-        }
-
-        function switchTab(containerId, idx) {
-            const container = document.getElementById(containerId);
-            const tabs = $$('button', container.querySelector('.tabs-list'));
-            const panels = $$('.tab-panel', container.querySelector('.tab-panels'));
-            tabs.forEach((t, i) => t.setAttribute('aria-selected', i === idx ? 'true' : 'false'));
-            panels.forEach((p, i) => p.setAttribute('aria-hidden', i === idx ? 'false' : 'true'));
-        }
-
-        function renderExperience() {
-            renderTabs('experience-tabs', resume.experiences, 'type', (exp) => {
-                const div = createElem('div', 'exp-item');
-                div.innerHTML = `
-                    <div class="exp-header">
-                        <span class="exp-title">${exp.title}</span>
-                        <span class="exp-org">${exp.organization}</span>
-                        <span class="exp-period">${exp.period}</span>
-                    </div>
-                    <ul class="exp-details">
-                        ${exp.details.map(d => `<li>${d}</li>`).join('')}
-                    </ul>`;
-                return div;
-            });
-        }
-
-        function renderProjects() {
-            renderTabs('projects-tabs', resume.projects, 'category', (proj) => {
-                const card = createElem('div', 'project-card');
-                card.innerHTML = `
-                    <div class="project-name">${proj.name}</div>
-                    <div class="project-period">${proj.period}</div>
-                    <div class="project-desc">${proj.description}</div>
-                    <div class="project-stack">${proj.stack.map(s => `<span>${s}</span>`).join('')}</div>
-                    <div class="project-result">📌 ${proj.result}</div>`;
-                return card;
-            });
-        }
-
-        function renderSkills() {
-            const container = $('#skills-container');
-            container.innerHTML = '';
-            for (const [label, items] of Object.entries(resume.skills)) {
-                const group = createElem('div', 'skill-group');
-                group.appendChild(createElem('span', 'skill-label', label));
-                const wrapper = createElem('div', 'skill-items');
-                items.forEach(item => wrapper.appendChild(createElem('span', '', item)));
-                group.appendChild(wrapper);
-                container.appendChild(group);
-            }
-        }
-
-        function renderEducation() {
-            const edu = resume.education;
-            $('#education-card').innerHTML = `
-                <h3>${edu.school}</h3>
-                <div class="meta">${edu.major} · ${edu.period}</div>
-                <p style="font-size:0.9rem;color:var(--color-text-secondary);margin-bottom:6px;">${edu.note}</p>
-                <div class="course-tags">${edu.courses.map(c => `<span>${c}</span>`).join('')}</div>`;
-        }
-
-        function renderCertificates() {
-            $('#certificates-card').innerHTML = `
-                <h3>证书与荣誉</h3>
-                <ul>${resume.certificates.map(c => `<li>${c}</li>`).join('')}</ul>`;
-        }
-
-        // ============================================================
-        // PORTFOLIO (作品集)
-        // ============================================================
-        function renderPortfolio() {
-            const grid = document.getElementById('portfolio-grid');
-            const portfolioItems = [
-                { src: '训练师初级.jpg', label: '阿里巴巴人工智能训练师（初级）' }
+            // 配色：金 / 朱砂 / 月光白
+            const PALETTES = [
+                { h: 42, s: 78, l: 66 },   // 金
+                { h: 8, s: 68, l: 56 },    // 朱砂
+                { h: 210, s: 42, l: 86 },  // 月光白
+                { h: 35, s: 85, l: 72 }    // 暖金
             ];
-            grid.innerHTML = '';
-            portfolioItems.forEach((item) => {
-                const card = createElem('div', 'portfolio-item');
-                const img = document.createElement('img');
-                img.src = item.src;
-                img.alt = item.label;
-                img.loading = 'lazy';
-                img.onerror = function() {
-                    this.style.display = 'none';
-                    const ph = document.createElement('div');
-                    ph.className = 'placeholder';
-                    ph.textContent = '🖼️ 图片加载失败';
-                    card.appendChild(ph);
-                };
-                card.addEventListener('click', () => {
-                    document.getElementById('lightbox-img').src = item.src;
-                    document.getElementById('lightbox').classList.add('active');
-                });
-                const label = createElem('div', 'portfolio-label', item.label);
-                card.appendChild(img);
-                card.appendChild(label);
-                grid.appendChild(card);
-            });
-        }
 
-        // ============================================================
-        // LIGHTBOX
-        // ============================================================
-        function initLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightbox-img');
-            document.getElementById('lightbox-close').addEventListener('click', () => {
-                lightbox.classList.remove('active');
-                img.src = '';
-            });
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.classList.remove('active');
-                    img.src = '';
+            function resize() {
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                W = intro.clientWidth;
+                H = intro.clientHeight;
+                canvas.width = W * dpr;
+                canvas.height = H * dpr;
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            class Particle {
+                constructor(x, y, palette) {
+                    this.x = x;
+                    this.y = y;
+                    const angle = Math.random() * Math.PI * 2;
+                    // 速度分布：大部分中等，少量高速形成放射感
+                    const speed = Math.random() < 0.15
+                        ? Math.random() * 7 + 5
+                        : Math.random() * 4.5 + 1.2;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                    this.life = 1;
+                    this.decay = Math.random() * 0.012 + 0.006;
+                    this.size = Math.random() * 2.2 + 0.8;
+                    this.palette = palette;
+                    // 微小的色相偏移，让颜色有层次
+                    this.hueShift = (Math.random() - 0.5) * 10;
+                    this.glow = Math.random() < 0.2;
                 }
+                update() {
+                    this.vx *= 0.975;
+                    this.vy *= 0.975;
+                    this.vy += 0.045; // 重力
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.life -= this.decay;
+                }
+                draw() {
+                    if (this.life <= 0) return;
+                    const a = Math.max(this.life, 0);
+                    const p = this.palette;
+                    ctx.fillStyle = `hsla(${p.h + this.hueShift}, ${p.s}%, ${p.l}%, ${a})`;
+                    if (this.glow) {
+                        ctx.shadowColor = `hsla(${p.h + this.hueShift}, ${p.s}%, ${p.l}%, ${a * 0.8})`;
+                        ctx.shadowBlur = 12;
+                    } else {
+                        ctx.shadowBlur = 0;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * (0.5 + this.life * 0.5), 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function burst(x, y, count) {
+                if (particles.length >= MAX_PARTICLES) return;
+                const palette = PALETTES[Math.floor(Math.random() * PALETTES.length)];
+                const n = Math.min(count, MAX_PARTICLES - particles.length);
+                for (let i = 0; i < n; i++) {
+                    particles.push(new Particle(x, y, palette));
+                }
+            }
+
+            function loop() {
+                // 拖尾：半透明覆盖
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.fillStyle = 'rgba(10, 10, 12, 0.16)';
+                ctx.fillRect(0, 0, W, H);
+
+                // 叠加发光
+                ctx.globalCompositeOperation = 'lighter';
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.update();
+                    p.draw();
+                    if (p.life <= 0) particles.splice(i, 1);
+                }
+                ctx.shadowBlur = 0;
+
+                rafId = requestAnimationFrame(loop);
+            }
+
+            // 开场烟花节奏
+            function scheduleBursts() {
+                if (reducedMotion) return;
+                const cx = W / 2;
+                const cy = H / 2;
+
+                // 第一波：中心大爆发
+                setTimeout(() => burst(cx, cy - 20, 140), 350);
+                // 第二波：左右偏移
+                setTimeout(() => burst(cx - W * 0.18, cy - H * 0.08, 90), 1100);
+                setTimeout(() => burst(cx + W * 0.18, cy + H * 0.05, 90), 1600);
+                // 第三波：上方小烟花
+                setTimeout(() => burst(cx - W * 0.28, cy - H * 0.25, 60), 2200);
+                setTimeout(() => burst(cx + W * 0.3, cy - H * 0.22, 60), 2600);
+
+                // 持续零星烟花（每 1.8 秒一次，直到进入）
+                const interval = setInterval(() => {
+                    if (entered) { clearInterval(interval); return; }
+                    const rx = W * (0.15 + Math.random() * 0.7);
+                    const ry = H * (0.15 + Math.random() * 0.45);
+                    burst(rx, ry, 50 + Math.random() * 40);
+                }, 1800);
+            }
+
+            function enter() {
+                if (entered) return;
+                entered = true;
+
+                // 最后一次中心大爆发
+                if (!reducedMotion) {
+                    burst(W / 2, H / 2, 160);
+                }
+
+                // 稍等片刻让爆发展开，再淡出
+                setTimeout(() => {
+                    intro.classList.add('hidden');
+                    document.body.classList.remove('intro-active');
+
+                    // 动画继续运行 1 秒后停止，节省性能
+                    setTimeout(() => {
+                        if (rafId) cancelAnimationFrame(rafId);
+                        rafId = null;
+                        particles = [];
+                        intro.style.display = 'none';
+                    }, 1000);
+                }, reducedMotion ? 0 : 380);
+            }
+
+            // 初始化
+            resize();
+
+            if (reducedMotion) {
+                // 减少动效：直接显示内容，不跑动画
+                enter();
+            } else {
+                loop();
+                scheduleBursts();
+            }
+
+            // 窗口尺寸变化
+            window.addEventListener('resize', () => {
+                if (entered) return;
+                resize();
+            });
+
+            // 点击进入
+            intro.addEventListener('click', enter);
+            enterBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                enter();
             });
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    lightbox.classList.remove('active');
-                    img.src = '';
+                if (!entered && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
+                    enter();
                 }
             });
-        }
+        })();
 
         // ============================================================
-        // THEME TOGGLE
+        // 星空粒子
         // ============================================================
-        function initTheme() {
-            const btn = document.querySelector('.theme-toggle');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            let current = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
-            applyTheme(current);
-            btn.addEventListener('click', () => {
-                const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                applyTheme(next);
-                localStorage.setItem('theme', next);
-            });
-        }
-
-        function applyTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            document.querySelector('.theme-toggle').textContent = theme === 'dark' ? '☀️' : '🌓';
-        }
+        (function createStars() {
+            const field = document.getElementById('starfield');
+            for (let i = 0; i < 36; i++) {
+                const star = document.createElement('div');
+                star.className = 'particle';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+                star.style.animationDuration = (Math.random() * 15 + 12) + 's';
+                star.style.animationDelay = (Math.random() * 15) + 's';
+                star.style.opacity = Math.random() * .3 + .08;
+                field.appendChild(star);
+            }
+        })();
 
         // ============================================================
-        // BACK TO TOP
+        // 导航滚动
         // ============================================================
-        function initBackTop() {
-            const btn = $('#back-top');
+        (function navScroll() {
+            const nav = document.getElementById('nav');
             window.addEventListener('scroll', () => {
-                btn.classList.toggle('visible', window.scrollY > 400);
-            });
-            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        }
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+            }, { passive: true });
+        })();
 
         // ============================================================
-        // EMAIL COPY
+        // 滚动 reveal
         // ============================================================
-        function initEmailCopy() {
-            const link = $('#email-link');
+        (function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                reveals.forEach(el => el.classList.add('visible'));
+                return;
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
+            });
+            reveals.forEach(el => observer.observe(el));
+        })();
+
+        // ============================================================
+        // 头像
+        // ============================================================
+        (function loadAvatar() {
+            const portrait = document.getElementById('portrait');
+            const img = new Image();
+            img.src = '照片.jpg';
+            img.onload = function() {
+                portrait.innerHTML = '';
+                const imgEl = document.createElement('img');
+                imgEl.src = '照片.jpg';
+                imgEl.alt = '岳奥飞';
+                portrait.appendChild(imgEl);
+            };
+            img.onerror = function() { /* 保留“岳”字 */ };
+        })();
+
+        // ============================================================
+        // 邮箱复制
+        // ============================================================
+        (function emailBtn() {
+            const btn = document.getElementById('emailBtn');
             const email = '24' + '7216' + '3485' + '@' + 'qq.com';
-            link.innerHTML = `✉️ ${email} <button class="copy-btn" id="copy-email" aria-label="复制邮箱">📋</button>`;
-            const newBtn = $('#copy-email');
-            newBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
                 navigator.clipboard.writeText(email).then(() => {
-                    const orig = newBtn.textContent;
-                    newBtn.textContent = '✅';
-                    setTimeout(() => newBtn.textContent = orig, 1500);
+                    const orig = btn.textContent;
+                    btn.textContent = '✅ 已复制';
+                    setTimeout(() => btn.textContent = orig, 1800);
                 }).catch(() => {
-                    const ta = document.createElement('textarea');
-                    ta.value = email;
-                    document.body.appendChild(ta);
-                    ta.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(ta);
-                    const orig = newBtn.textContent;
-                    newBtn.textContent = '✅';
-                    setTimeout(() => newBtn.textContent = orig, 1500);
+                    window.location.href = 'mailto:' + email;
                 });
             });
-            link.addEventListener('click', (e) => e.preventDefault());
-        }
+        })();
 
         // ============================================================
-        // MUSIC
+        // 背景音乐（仅按钮触发，不自动播放）
         // ============================================================
-        function initMusic() {
+        (function music() {
             const btn = document.getElementById('musicBtn');
             const audio = new Audio('https://cdn.pixabay.com/audio/2022/10/25/audio_ec6f6e8d8a.mp3');
             audio.loop = true;
-            audio.volume = 0.3;
-            audio.preload = 'auto';
+            audio.volume = 0.28;
+            audio.preload = 'none';
+            let playing = false;
 
-            let isPlaying = false;
-            let playedOnce = false;
-
-            function autoPlay() {
-                if (playedOnce) return;
-                audio.play().then(() => {
-                    isPlaying = true;
-                    playedOnce = true;
-                    btn.textContent = '🔊';
-                    btn.classList.add('playing');
-                }).catch(() => {});
-                document.removeEventListener('click', autoPlay);
-                document.removeEventListener('touchstart', autoPlay);
-                document.removeEventListener('keydown', autoPlay);
-            }
-
-            document.addEventListener('click', autoPlay);
-            document.addEventListener('touchstart', autoPlay);
-            document.addEventListener('keydown', autoPlay);
-
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (isPlaying) {
+            btn.addEventListener('click', () => {
+                if (playing) {
                     audio.pause();
-                    isPlaying = false;
-                    btn.textContent = '🎵';
+                    playing = false;
+                    btn.textContent = '♪';
                     btn.classList.remove('playing');
                 } else {
-                    if (!playedOnce) {
-                        playedOnce = true;
-                        audio.play().then(() => {
-                            isPlaying = true;
-                            btn.textContent = '🔊';
-                            btn.classList.add('playing');
-                        }).catch(() => {});
-                        document.removeEventListener('click', autoPlay);
-                        document.removeEventListener('touchstart', autoPlay);
-                        document.removeEventListener('keydown', autoPlay);
-                    } else {
-                        audio.play().then(() => {
-                            isPlaying = true;
-                            btn.textContent = '🔊';
-                            btn.classList.add('playing');
-                        }).catch(() => {});
-                    }
+                    audio.play().then(() => {
+                        playing = true;
+                        btn.textContent = '❚❚';
+                        btn.classList.add('playing');
+                    }).catch(() => {
+                        btn.textContent = '♪';
+                    });
                 }
             });
 
             document.addEventListener('visibilitychange', () => {
-                if (document.hidden && isPlaying) {
+                if (document.hidden && playing) {
                     audio.pause();
-                } else if (!document.hidden && isPlaying) {
+                } else if (!document.hidden && playing) {
                     audio.play().catch(() => {});
                 }
             });
-        }
+        })();
 
         // ============================================================
-        // AVATAR — 证件照.jpg
+        // 灯箱
         // ============================================================
-        function initAvatar() {
-            const container = document.getElementById('avatarContainer');
-            const img = new Image();
-            img.src = '证件照.jpg';
-            img.onload = function() {
-                container.innerHTML = '';
-                const imgEl = document.createElement('img');
-                imgEl.src = '证件照.jpg';
-                imgEl.alt = '个人头像';
-                container.appendChild(imgEl);
-            };
-            // 若图片不存在，保留默认文字头像
-        }
+        (function lightbox() {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            const close = document.getElementById('lightboxClose');
+
+            // 图片加载失败时替换为占位
+            document.querySelectorAll('.portfolio-item img').forEach(el => {
+                el.addEventListener('error', function() {
+                    const wrap = this.parentElement;
+                    this.remove();
+                    const ph = document.createElement('div');
+                    ph.className = 'portfolio-placeholder';
+                    ph.textContent = '🖼️ 图片待补充';
+                    wrap.insertBefore(ph, wrap.firstChild);
+                }, { once: true });
+            });
+
+            document.querySelectorAll('.portfolio-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const src = item.dataset.src;
+                    if (!src) return;
+                    img.src = src;
+                    lb.classList.add('active');
+                });
+            });
+
+            function hide() {
+                lb.classList.remove('active');
+                img.src = '';
+            }
+            close.addEventListener('click', hide);
+            lb.addEventListener('click', (e) => {
+                if (e.target === lb) hide();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') hide();
+            });
+        })();
 
         // ============================================================
-        // INIT
+        // 平滑锚点
         // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            renderHighlights();
-            renderExperience();
-            renderProjects();
-            renderSkills();
-            renderPortfolio();
-            renderEducation();
-            renderCertificates();
-            initLightbox();
-            initTheme();
-            initBackTop();
-            initEmailCopy();
-            initMusic();
-            initAvatar();
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const id = this.getAttribute('href');
+                if (id === '#') return;
+                const target = document.querySelector(id);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
     </script>
 

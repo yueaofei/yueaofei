@@ -1,0 +1,7 @@
+# 默认忽略 everything，只放行网站真正需要的文件
+# 目的：防止 git add . 把 800MB 的安装包和无关目录推到 GitHub
+*
+!.gitignore
+!index.html
+!训练师初级.jpg
+!证件照.jpg
